@@ -1,0 +1,3188 @@
+{
+  "manifest_version": 1,
+  "type": "calendar",
+  "name": "Ticketmaster",
+  "description": {
+    "en": "Concerts, shows and matches: calendars, ticket sale alerts, reminders and widgets.",
+    "fr": "Concerts, spectacles et matchs : calendriers, alertes de billetterie, rappels et widgets.",
+    "de": "Konzerte, Shows und Spiele: Kalender, Vorverkaufsalarme, Erinnerungen und Widgets.",
+    "es": "Conciertos, espectáculos y partidos: calendarios, avisos de venta, recordatorios y widgets."
+  },
+  "version": "0.1.0",
+  "docker_image": "ghcr.io/william-de71/gladys-ticketmaster:0.1.0",
+  "gladys_version": ">=5.3.0",
+  "categories": ["leisure", "multimedia"],
+  "keywords": [
+    "concerts",
+    "billetterie",
+    "tickets",
+    "spectacles",
+    "matchs",
+    "events",
+    "Live Nation",
+    "festival",
+    "agenda",
+    "sorties"
+  ],
+  "cover_image": "https://raw.githubusercontent.com/William-De71/gladys-ticketmaster/main/cover.jpg",
+  "transports": ["cloud"],
+  "location": true,
+  "config_schema": [
+    {
+      "key": "intro",
+      "type": "section",
+      "label": {
+        "en": "How it works",
+        "fr": "Comment ça marche",
+        "de": "So funktioniert es",
+        "es": "Cómo funciona"
+      },
+      "description": {
+        "en": "1. Create a free Ticketmaster key (link below: register, then the “Consumer Key” of your default app) and paste it here.\n2. Choose what to follow: the events around the house (radius and categories below), and/or artists, teams and venues with the buttons further down.\n3. Enable the integration in “My calendars” below: you get one calendar per kind of source.\n4. Add the widgets to a dashboard and use the scene triggers (new date, reminder, ticket sale opening, canceled or moved).\nOnly a rough position of the house (about 150 m), the followed names and your key are sent to Ticketmaster.",
+        "fr": "1. Créez une clé Ticketmaster gratuite (lien ci-dessous : inscription, puis la « Consumer Key » de votre application par défaut) et collez-la ici.\n2. Choisissez ce que vous suivez : les sorties autour de la maison (rayon et catégories ci-dessous), et/ou des artistes, équipes et salles avec les boutons plus bas.\n3. Activez l’intégration dans « Mes calendriers » ci-dessous : vous obtenez un calendrier par type de source.\n4. Ajoutez les widgets à un tableau de bord et utilisez les déclencheurs de scène (nouvelle date, rappel, mise en vente, annulation ou changement de date).\nSeuls une position approximative de la maison (environ 150 m), les noms suivis et votre clé sont envoyés à Ticketmaster.",
+        "de": "1. Erstellen Sie einen kostenlosen Ticketmaster-Schlüssel (Link unten: registrieren, dann der „Consumer Key“ Ihrer Standard-App) und fügen Sie ihn hier ein.\n2. Wählen Sie, was Sie verfolgen: Veranstaltungen rund ums Haus (Umkreis und Kategorien unten) und/oder Künstler, Teams und Veranstaltungsorte über die Schaltflächen weiter unten.\n3. Aktivieren Sie die Integration unten in „Meine Kalender“: Sie erhalten einen Kalender pro Quellenart.\n4. Fügen Sie die Widgets einem Dashboard hinzu und nutzen Sie die Szenen-Auslöser (neuer Termin, Erinnerung, Vorverkaufsstart, Absage oder Verlegung).\nNur eine ungefähre Position des Hauses (etwa 150 m), die verfolgten Namen und Ihr Schlüssel werden an Ticketmaster gesendet.",
+        "es": "1. Cree una clave de Ticketmaster gratuita (enlace abajo: regístrese y copie la «Consumer Key» de su aplicación por defecto) y péguela aquí.\n2. Elija qué seguir: los eventos alrededor de la casa (radio y categorías abajo), y/o artistas, equipos y recintos con los botones más abajo.\n3. Active la integración en «Mis calendarios» más abajo: obtendrá un calendario por tipo de fuente.\n4. Añada los widgets a un panel y use los disparadores de escena (nueva fecha, recordatorio, apertura de venta, cancelación o cambio de fecha).\nSolo se envían a Ticketmaster una posición aproximada de la casa (unos 150 m), los nombres seguidos y su clave."
+      },
+      "links": [
+        {
+          "url": "https://developer-acct.ticketmaster.com/user/register",
+          "label": {
+            "en": "Create a Ticketmaster key",
+            "fr": "Créer une clé Ticketmaster",
+            "de": "Ticketmaster-Schlüssel erstellen",
+            "es": "Crear una clave de Ticketmaster"
+          }
+        },
+        {
+          "url": "https://github.com/William-De71/gladys-ticketmaster/blob/main/docs/en.md",
+          "label": {
+            "en": "Documentation",
+            "fr": "Documentation (anglais)",
+            "de": "Dokumentation (Englisch)",
+            "es": "Documentación (inglés)"
+          }
+        },
+        {
+          "url": "https://github.com/William-De71/gladys-ticketmaster/blob/main/docs/fr.md",
+          "label": {
+            "en": "Documentation (French)",
+            "fr": "Documentation",
+            "de": "Dokumentation (Französisch)",
+            "es": "Documentación (francés)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "api_key",
+      "type": "secret",
+      "required": true,
+      "label": {
+        "en": "Ticketmaster API key",
+        "fr": "Clé d’API Ticketmaster",
+        "de": "Ticketmaster-API-Schlüssel",
+        "es": "Clave de API de Ticketmaster"
+      },
+      "description": {
+        "en": "The “Consumer Key” of your app on developer.ticketmaster.com: free, 5,000 requests a day (the integration uses a few hundred at most). Only sent to Ticketmaster.",
+        "fr": "La « Consumer Key » de votre application sur developer.ticketmaster.com : gratuite, 5 000 requêtes par jour (l’intégration en utilise quelques centaines au plus). Envoyée uniquement à Ticketmaster.",
+        "de": "Der „Consumer Key“ Ihrer App auf developer.ticketmaster.com: kostenlos, 5.000 Anfragen pro Tag (die Integration braucht höchstens einige Hundert). Wird nur an Ticketmaster gesendet.",
+        "es": "La «Consumer Key» de su aplicación en developer.ticketmaster.com: gratuita, 5.000 peticiones al día (la integración usa unos cientos como máximo). Solo se envía a Ticketmaster."
+      }
+    },
+    {
+      "key": "nearby",
+      "type": "section",
+      "label": {
+        "en": "Around the house",
+        "fr": "Autour de la maison",
+        "de": "Rund ums Haus",
+        "es": "Alrededor de la casa"
+      },
+      "description": {
+        "en": "Every event Ticketmaster lists within the radius, in the categories chosen. The position of the house comes from Gladys (Settings → Houses).",
+        "fr": "Toutes les sorties que Ticketmaster liste dans le rayon, dans les catégories choisies. La position de la maison vient de Gladys (Paramètres → Maisons).",
+        "de": "Alle Veranstaltungen, die Ticketmaster im Umkreis listet, in den gewählten Kategorien. Die Position des Hauses kommt aus Gladys (Einstellungen → Häuser).",
+        "es": "Todos los eventos que Ticketmaster lista dentro del radio, en las categorías elegidas. La posición de la casa viene de Gladys (Ajustes → Casas)."
+      }
+    },
+    {
+      "key": "house",
+      "type": "select",
+      "source": "houses",
+      "label": {
+        "en": "House",
+        "fr": "Maison",
+        "de": "Haus",
+        "es": "Casa"
+      },
+      "description": {
+        "en": "Empty: the first house with a position.",
+        "fr": "Vide : la première maison qui a une position.",
+        "de": "Leer: das erste Haus mit Position.",
+        "es": "Vacío: la primera casa con posición."
+      }
+    },
+    {
+      "key": "radius_km",
+      "type": "select",
+      "label": {
+        "en": "Radius",
+        "fr": "Rayon",
+        "de": "Umkreis",
+        "es": "Radio"
+      },
+      "options": [
+        {
+          "value": "0",
+          "label": {
+            "en": "Off",
+            "fr": "Désactivé",
+            "de": "Aus",
+            "es": "Desactivado"
+          }
+        },
+        {
+          "value": "5",
+          "label": {
+            "en": "5 km",
+            "fr": "5 km",
+            "de": "5 km",
+            "es": "5 km"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "en": "10 km",
+            "fr": "10 km",
+            "de": "10 km",
+            "es": "10 km"
+          }
+        },
+        {
+          "value": "25",
+          "label": {
+            "en": "25 km",
+            "fr": "25 km",
+            "de": "25 km",
+            "es": "25 km"
+          }
+        },
+        {
+          "value": "50",
+          "label": {
+            "en": "50 km",
+            "fr": "50 km",
+            "de": "50 km",
+            "es": "50 km"
+          }
+        },
+        {
+          "value": "100",
+          "label": {
+            "en": "100 km",
+            "fr": "100 km",
+            "de": "100 km",
+            "es": "100 km"
+          }
+        }
+      ],
+      "default": "25"
+    },
+    {
+      "key": "segments",
+      "type": "multi_select",
+      "required": true,
+      "label": {
+        "en": "Categories",
+        "fr": "Catégories",
+        "de": "Kategorien",
+        "es": "Categorías"
+      },
+      "options": [
+        {
+          "value": "music",
+          "label": {
+            "en": "Music",
+            "fr": "Musique",
+            "de": "Musik",
+            "es": "Música"
+          }
+        },
+        {
+          "value": "sports",
+          "label": {
+            "en": "Sport",
+            "fr": "Sport",
+            "de": "Sport",
+            "es": "Deporte"
+          }
+        },
+        {
+          "value": "arts",
+          "label": {
+            "en": "Arts & theatre",
+            "fr": "Arts et spectacles",
+            "de": "Kunst & Theater",
+            "es": "Artes y teatro"
+          }
+        },
+        {
+          "value": "film",
+          "label": {
+            "en": "Film",
+            "fr": "Cinéma",
+            "de": "Film",
+            "es": "Cine"
+          }
+        },
+        {
+          "value": "misc",
+          "label": {
+            "en": "Other",
+            "fr": "Divers",
+            "de": "Sonstiges",
+            "es": "Otros"
+          }
+        }
+      ],
+      "default": ["music", "arts"]
+    },
+    {
+      "key": "nearby_days",
+      "type": "select",
+      "label": {
+        "en": "How far ahead",
+        "fr": "Jusqu’à quand",
+        "de": "Wie weit im Voraus",
+        "es": "Hasta cuándo"
+      },
+      "description": {
+        "en": "Ticketmaster answers 1,000 events at most: in a big city, a smaller radius or period keeps every date.",
+        "fr": "Ticketmaster répond 1 000 sorties au plus : dans une grande ville, un rayon ou une durée plus petits gardent toutes les dates.",
+        "de": "Ticketmaster liefert höchstens 1.000 Veranstaltungen: In einer Großstadt behalten ein kleinerer Umkreis oder Zeitraum alle Termine.",
+        "es": "Ticketmaster devuelve 1.000 eventos como máximo: en una gran ciudad, un radio o periodo menor conserva todas las fechas."
+      },
+      "options": [
+        {
+          "value": "30",
+          "label": {
+            "en": "30 days",
+            "fr": "30 jours",
+            "de": "30 Tage",
+            "es": "30 días"
+          }
+        },
+        {
+          "value": "90",
+          "label": {
+            "en": "3 months",
+            "fr": "3 mois",
+            "de": "3 Monate",
+            "es": "3 meses"
+          }
+        },
+        {
+          "value": "180",
+          "label": {
+            "en": "6 months",
+            "fr": "6 mois",
+            "de": "6 Monate",
+            "es": "6 meses"
+          }
+        },
+        {
+          "value": "365",
+          "label": {
+            "en": "1 year",
+            "fr": "1 an",
+            "de": "1 Jahr",
+            "es": "1 año"
+          }
+        }
+      ],
+      "default": "90"
+    },
+    {
+      "key": "followed",
+      "type": "section",
+      "label": {
+        "en": "Followed artists, teams and venues",
+        "fr": "Artistes, équipes et salles suivis",
+        "de": "Verfolgte Künstler, Teams und Orte",
+        "es": "Artistas, equipos y recintos seguidos"
+      },
+      "description": {
+        "en": "Use the buttons below (“Follow an artist or a team”, “Follow a venue”): a name is enough. Their dates are looked for two years ahead.",
+        "fr": "Utilisez les boutons ci-dessous (« Suivre un artiste ou une équipe », « Suivre une salle ») : un nom suffit. Leurs dates sont cherchées deux ans à l’avance.",
+        "de": "Nutzen Sie die Schaltflächen unten („Künstler oder Team folgen“, „Veranstaltungsort folgen“): Ein Name genügt. Termine werden zwei Jahre im Voraus gesucht.",
+        "es": "Use los botones de abajo («Seguir a un artista o equipo», «Seguir un recinto»): basta un nombre. Sus fechas se buscan con dos años de antelación."
+      }
+    },
+    {
+      "key": "followed_country",
+      "type": "select",
+      "label": {
+        "en": "Country of the dates of the followed artists and teams",
+        "fr": "Pays des dates des artistes et équipes suivis",
+        "de": "Land der Termine verfolgter Künstler und Teams",
+        "es": "País de las fechas de artistas y equipos seguidos"
+      },
+      "description": {
+        "en": "A world tour has dates everywhere: only the ones of this country are kept. Also narrows the search of a venue.",
+        "fr": "Une tournée mondiale a des dates partout : seules celles de ce pays sont gardées. Limite aussi la recherche d’une salle.",
+        "de": "Eine Welttournee hat überall Termine: Nur die dieses Landes bleiben. Grenzt auch die Suche nach einem Ort ein.",
+        "es": "Una gira mundial tiene fechas en todas partes: solo se conservan las de este país. También limita la búsqueda de un recinto."
+      },
+      "options": [
+        {
+          "value": "all",
+          "label": {
+            "en": "Every country",
+            "fr": "Tous les pays",
+            "de": "Alle Länder",
+            "es": "Todos los países"
+          }
+        },
+        {
+          "value": "FR",
+          "label": {
+            "en": "France",
+            "fr": "France",
+            "de": "Frankreich",
+            "es": "Francia"
+          }
+        },
+        {
+          "value": "BE",
+          "label": {
+            "en": "Belgium",
+            "fr": "Belgique",
+            "de": "Belgien",
+            "es": "Bélgica"
+          }
+        },
+        {
+          "value": "CH",
+          "label": {
+            "en": "Switzerland",
+            "fr": "Suisse",
+            "de": "Schweiz",
+            "es": "Suiza"
+          }
+        },
+        {
+          "value": "LU",
+          "label": {
+            "en": "Luxembourg",
+            "fr": "Luxembourg",
+            "de": "Luxemburg",
+            "es": "Luxemburgo"
+          }
+        },
+        {
+          "value": "DE",
+          "label": {
+            "en": "Germany",
+            "fr": "Allemagne",
+            "de": "Deutschland",
+            "es": "Alemania"
+          }
+        },
+        {
+          "value": "AT",
+          "label": {
+            "en": "Austria",
+            "fr": "Autriche",
+            "de": "Österreich",
+            "es": "Austria"
+          }
+        },
+        {
+          "value": "NL",
+          "label": {
+            "en": "Netherlands",
+            "fr": "Pays-Bas",
+            "de": "Niederlande",
+            "es": "Países Bajos"
+          }
+        },
+        {
+          "value": "ES",
+          "label": {
+            "en": "Spain",
+            "fr": "Espagne",
+            "de": "Spanien",
+            "es": "España"
+          }
+        },
+        {
+          "value": "IT",
+          "label": {
+            "en": "Italy",
+            "fr": "Italie",
+            "de": "Italien",
+            "es": "Italia"
+          }
+        },
+        {
+          "value": "PT",
+          "label": {
+            "en": "Portugal",
+            "fr": "Portugal",
+            "de": "Portugal",
+            "es": "Portugal"
+          }
+        },
+        {
+          "value": "GB",
+          "label": {
+            "en": "United Kingdom",
+            "fr": "Royaume-Uni",
+            "de": "Vereinigtes Königreich",
+            "es": "Reino Unido"
+          }
+        },
+        {
+          "value": "IE",
+          "label": {
+            "en": "Ireland",
+            "fr": "Irlande",
+            "de": "Irland",
+            "es": "Irlanda"
+          }
+        },
+        {
+          "value": "DK",
+          "label": {
+            "en": "Denmark",
+            "fr": "Danemark",
+            "de": "Dänemark",
+            "es": "Dinamarca"
+          }
+        },
+        {
+          "value": "SE",
+          "label": {
+            "en": "Sweden",
+            "fr": "Suède",
+            "de": "Schweden",
+            "es": "Suecia"
+          }
+        },
+        {
+          "value": "NO",
+          "label": {
+            "en": "Norway",
+            "fr": "Norvège",
+            "de": "Norwegen",
+            "es": "Noruega"
+          }
+        },
+        {
+          "value": "FI",
+          "label": {
+            "en": "Finland",
+            "fr": "Finlande",
+            "de": "Finnland",
+            "es": "Finlandia"
+          }
+        },
+        {
+          "value": "PL",
+          "label": {
+            "en": "Poland",
+            "fr": "Pologne",
+            "de": "Polen",
+            "es": "Polonia"
+          }
+        },
+        {
+          "value": "CZ",
+          "label": {
+            "en": "Czechia",
+            "fr": "Tchéquie",
+            "de": "Tschechien",
+            "es": "Chequia"
+          }
+        },
+        {
+          "value": "US",
+          "label": {
+            "en": "United States",
+            "fr": "États-Unis",
+            "de": "Vereinigte Staaten",
+            "es": "Estados Unidos"
+          }
+        },
+        {
+          "value": "CA",
+          "label": {
+            "en": "Canada",
+            "fr": "Canada",
+            "de": "Kanada",
+            "es": "Canadá"
+          }
+        },
+        {
+          "value": "MX",
+          "label": {
+            "en": "Mexico",
+            "fr": "Mexique",
+            "de": "Mexiko",
+            "es": "México"
+          }
+        },
+        {
+          "value": "AU",
+          "label": {
+            "en": "Australia",
+            "fr": "Australie",
+            "de": "Australien",
+            "es": "Australia"
+          }
+        },
+        {
+          "value": "NZ",
+          "label": {
+            "en": "New Zealand",
+            "fr": "Nouvelle-Zélande",
+            "de": "Neuseeland",
+            "es": "Nueva Zelanda"
+          }
+        }
+      ],
+      "default": "FR"
+    },
+    {
+      "key": "options",
+      "type": "section",
+      "label": {
+        "en": "Reading and scenes",
+        "fr": "Lecture et scènes",
+        "de": "Lesen und Szenen",
+        "es": "Lectura y escenas"
+      }
+    },
+    {
+      "key": "interval_hours",
+      "type": "select",
+      "label": {
+        "en": "Reading of Ticketmaster",
+        "fr": "Lecture de Ticketmaster",
+        "de": "Lesen von Ticketmaster",
+        "es": "Lectura de Ticketmaster"
+      },
+      "options": [
+        {
+          "value": "6",
+          "label": {
+            "en": "Every 6 hours",
+            "fr": "Toutes les 6 heures",
+            "de": "Alle 6 Stunden",
+            "es": "Cada 6 horas"
+          }
+        },
+        {
+          "value": "12",
+          "label": {
+            "en": "Every 12 hours",
+            "fr": "Toutes les 12 heures",
+            "de": "Alle 12 Stunden",
+            "es": "Cada 12 horas"
+          }
+        },
+        {
+          "value": "24",
+          "label": {
+            "en": "Every 24 hours",
+            "fr": "Toutes les 24 heures",
+            "de": "Alle 24 Stunden",
+            "es": "Cada 24 horas"
+          }
+        }
+      ],
+      "default": "12"
+    },
+    {
+      "key": "notify_hour",
+      "type": "number",
+      "min": 0,
+      "max": 23,
+      "default": 9,
+      "label": {
+        "en": "Hour of the reminders",
+        "fr": "Heure des rappels",
+        "de": "Stunde der Erinnerungen",
+        "es": "Hora de los recordatorios"
+      },
+      "description": {
+        "en": "From 0 to 23, local time: the “reminder” scenes run at that hour on the day (or the day before, or a week before).",
+        "fr": "De 0 à 23, heure locale : les scènes « rappel » se lancent à cette heure le jour même (ou la veille, ou une semaine avant).",
+        "de": "Von 0 bis 23, Ortszeit: Die „Erinnerung“-Szenen starten zu dieser Stunde am Tag selbst (oder am Vortag oder eine Woche vorher).",
+        "es": "De 0 a 23, hora local: las escenas «recordatorio» se ejecutan a esa hora el mismo día (o la víspera, o una semana antes)."
+      },
+      "placeholder": {
+        "en": "9",
+        "fr": "9",
+        "de": "9",
+        "es": "9"
+      }
+    },
+    {
+      "key": "language",
+      "type": "select",
+      "label": {
+        "en": "Language of the scene texts",
+        "fr": "Langue des textes des scènes",
+        "de": "Sprache der Szenentexte",
+        "es": "Idioma de los textos de las escenas"
+      },
+      "description": {
+        "en": "For the ready-made sentences of the scenes and the messages of the buttons. Automatic: the language of the dashboard.",
+        "fr": "Pour les phrases toutes faites des scènes et les messages des boutons. Automatique : la langue du tableau de bord.",
+        "de": "Für die fertigen Sätze der Szenen und die Meldungen der Schaltflächen. Automatisch: die Sprache des Dashboards.",
+        "es": "Para las frases hechas de las escenas y los mensajes de los botones. Automático: el idioma del panel."
+      },
+      "options": [
+        {
+          "value": "auto",
+          "label": {
+            "en": "Automatic",
+            "fr": "Automatique",
+            "de": "Automatisch",
+            "es": "Automático"
+          }
+        },
+        {
+          "value": "en",
+          "label": {
+            "en": "English",
+            "fr": "Anglais",
+            "de": "Englisch",
+            "es": "Inglés"
+          }
+        },
+        {
+          "value": "fr",
+          "label": {
+            "en": "French",
+            "fr": "Français",
+            "de": "Französisch",
+            "es": "Francés"
+          }
+        },
+        {
+          "value": "de",
+          "label": {
+            "en": "German",
+            "fr": "Allemand",
+            "de": "Deutsch",
+            "es": "Alemán"
+          }
+        },
+        {
+          "value": "es",
+          "label": {
+            "en": "Spanish",
+            "fr": "Espagnol",
+            "de": "Spanisch",
+            "es": "Español"
+          }
+        }
+      ],
+      "default": "auto"
+    }
+  ],
+  "actions": [
+    {
+      "key": "follow_attraction",
+      "timeout_seconds": 60,
+      "label": {
+        "en": "Follow an artist or a team",
+        "fr": "Suivre un artiste ou une équipe",
+        "de": "Künstler oder Team folgen",
+        "es": "Seguir a un artista o equipo"
+      },
+      "description": {
+        "en": "Type the name as Ticketmaster writes it. For a namesake, paste its identifier instead (given by the answer).",
+        "fr": "Saisissez le nom tel que Ticketmaster l’écrit. Pour un homonyme, collez plutôt son identifiant (donné par la réponse).",
+        "de": "Geben Sie den Namen so ein, wie Ticketmaster ihn schreibt. Bei Namensvettern fügen Sie stattdessen die Kennung ein (in der Antwort).",
+        "es": "Escriba el nombre tal como lo escribe Ticketmaster. Para un homónimo, pegue su identificador (lo da la respuesta)."
+      },
+      "fields": [
+        {
+          "key": "name",
+          "type": "string",
+          "required": true,
+          "label": {
+            "en": "Artist or team",
+            "fr": "Artiste ou équipe",
+            "de": "Künstler oder Team",
+            "es": "Artista o equipo"
+          },
+          "description": {
+            "en": "A name, or a Ticketmaster identifier (K8vZ917Gku7).",
+            "fr": "Un nom, ou un identifiant Ticketmaster (K8vZ917Gku7).",
+            "de": "Ein Name oder eine Ticketmaster-Kennung (K8vZ917Gku7).",
+            "es": "Un nombre, o un identificador de Ticketmaster (K8vZ917Gku7)."
+          },
+          "placeholder": {
+            "en": "Muse",
+            "fr": "Muse",
+            "de": "Muse",
+            "es": "Muse"
+          }
+        }
+      ]
+    },
+    {
+      "key": "unfollow_attraction",
+      "timeout_seconds": 20,
+      "label": {
+        "en": "Stop following an artist or a team",
+        "fr": "Ne plus suivre un artiste ou une équipe",
+        "de": "Künstler oder Team nicht mehr folgen",
+        "es": "Dejar de seguir a un artista o equipo"
+      },
+      "fields": [
+        {
+          "key": "name",
+          "type": "string",
+          "required": true,
+          "label": {
+            "en": "Artist or team",
+            "fr": "Artiste ou équipe",
+            "de": "Künstler oder Team",
+            "es": "Artista o equipo"
+          },
+          "description": {
+            "en": "Its name as shown by “List what is followed”, or its identifier.",
+            "fr": "Son nom tel que l’affiche « Lister ce qui est suivi », ou son identifiant.",
+            "de": "Der Name wie in „Verfolgtes auflisten“ oder die Kennung.",
+            "es": "Su nombre tal como lo muestra «Listar lo que se sigue», o su identificador."
+          },
+          "placeholder": {
+            "en": "Muse",
+            "fr": "Muse",
+            "de": "Muse",
+            "es": "Muse"
+          }
+        }
+      ]
+    },
+    {
+      "key": "follow_venue",
+      "timeout_seconds": 60,
+      "label": {
+        "en": "Follow a venue",
+        "fr": "Suivre une salle",
+        "de": "Veranstaltungsort folgen",
+        "es": "Seguir un recinto"
+      },
+      "description": {
+        "en": "Type its name: the search is narrowed to the country of the followed artists. Namesakes (several “Zénith”) are listed with their city and identifier.",
+        "fr": "Saisissez son nom : la recherche se limite au pays des artistes suivis. Les homonymes (plusieurs « Zénith ») sont listés avec leur ville et leur identifiant.",
+        "de": "Geben Sie den Namen ein: Die Suche beschränkt sich auf das Land der verfolgten Künstler. Namensvettern werden mit Stadt und Kennung aufgelistet.",
+        "es": "Escriba su nombre: la búsqueda se limita al país de los artistas seguidos. Los homónimos se listan con su ciudad e identificador."
+      },
+      "fields": [
+        {
+          "key": "name",
+          "type": "string",
+          "required": true,
+          "label": {
+            "en": "Venue",
+            "fr": "Salle",
+            "de": "Veranstaltungsort",
+            "es": "Recinto"
+          },
+          "description": {
+            "en": "A name, or a Ticketmaster identifier (KovZpZA7AAEA).",
+            "fr": "Un nom, ou un identifiant Ticketmaster (KovZpZA7AAEA).",
+            "de": "Ein Name oder eine Ticketmaster-Kennung (KovZpZA7AAEA).",
+            "es": "Un nombre, o un identificador de Ticketmaster (KovZpZA7AAEA)."
+          },
+          "placeholder": {
+            "en": "Accor Arena",
+            "fr": "Accor Arena",
+            "de": "Accor Arena",
+            "es": "Accor Arena"
+          }
+        }
+      ]
+    },
+    {
+      "key": "unfollow_venue",
+      "timeout_seconds": 20,
+      "label": {
+        "en": "Stop following a venue",
+        "fr": "Ne plus suivre une salle",
+        "de": "Veranstaltungsort nicht mehr folgen",
+        "es": "Dejar de seguir un recinto"
+      },
+      "fields": [
+        {
+          "key": "name",
+          "type": "string",
+          "required": true,
+          "label": {
+            "en": "Venue",
+            "fr": "Salle",
+            "de": "Veranstaltungsort",
+            "es": "Recinto"
+          },
+          "description": {
+            "en": "Its name as shown by “List what is followed”, or its identifier.",
+            "fr": "Son nom tel que l’affiche « Lister ce qui est suivi », ou son identifiant.",
+            "de": "Der Name wie in „Verfolgtes auflisten“ oder die Kennung.",
+            "es": "Su nombre tal como lo muestra «Listar lo que se sigue», o su identificador."
+          },
+          "placeholder": {
+            "en": "Accor Arena",
+            "fr": "Accor Arena",
+            "de": "Accor Arena",
+            "es": "Accor Arena"
+          }
+        }
+      ]
+    },
+    {
+      "key": "list_followed",
+      "timeout_seconds": 15,
+      "label": {
+        "en": "List what is followed",
+        "fr": "Lister ce qui est suivi",
+        "de": "Verfolgtes auflisten",
+        "es": "Listar lo que se sigue"
+      },
+      "description": {
+        "en": "Around the house, the artists, teams and venues followed, with their identifiers.",
+        "fr": "Autour de la maison, les artistes, équipes et salles suivis, avec leurs identifiants.",
+        "de": "Rund ums Haus, die verfolgten Künstler, Teams und Orte mit ihren Kennungen.",
+        "es": "Alrededor de la casa, los artistas, equipos y recintos seguidos, con sus identificadores."
+      }
+    },
+    {
+      "key": "refresh",
+      "timeout_seconds": 120,
+      "label": {
+        "en": "Read again now",
+        "fr": "Relire maintenant",
+        "de": "Jetzt neu lesen",
+        "es": "Volver a leer ahora"
+      },
+      "description": {
+        "en": "Reads Ticketmaster without waiting for the next reading.",
+        "fr": "Relit Ticketmaster sans attendre la prochaine lecture.",
+        "de": "Liest Ticketmaster, ohne auf den nächsten Lesevorgang zu warten.",
+        "es": "Vuelve a leer Ticketmaster sin esperar a la próxima lectura."
+      }
+    }
+  ],
+  "widgets": [
+    {
+      "key": "upcoming",
+      "icon": "calendar",
+      "label": {
+        "en": "Upcoming events",
+        "fr": "Prochaines sorties",
+        "de": "Kommende Termine",
+        "es": "Próximos eventos"
+      },
+      "description": {
+        "en": "The next concerts, shows and matches, with day, time, venue and picture.",
+        "fr": "Les prochains concerts, spectacles et matchs, avec jour, heure, lieu et image.",
+        "de": "Die nächsten Konzerte, Shows und Spiele mit Tag, Uhrzeit, Ort und Bild.",
+        "es": "Los próximos conciertos, espectáculos y partidos, con día, hora, lugar e imagen."
+      },
+      "settings": [
+        {
+          "key": "sources",
+          "type": "multi_select",
+          "label": {
+            "en": "Source",
+            "fr": "Source",
+            "de": "Quelle",
+            "es": "Fuente"
+          },
+          "description": {
+            "en": "Empty: all.",
+            "fr": "Vide : toutes.",
+            "de": "Leer: alle.",
+            "es": "Vacío: todas."
+          },
+          "options": [
+            {
+              "value": "artist",
+              "label": {
+                "en": "Followed artists and teams",
+                "fr": "Artistes et équipes suivis",
+                "de": "Verfolgte Künstler und Teams",
+                "es": "Artistas y equipos seguidos"
+              }
+            },
+            {
+              "value": "venue",
+              "label": {
+                "en": "Followed venues",
+                "fr": "Salles suivies",
+                "de": "Verfolgte Veranstaltungsorte",
+                "es": "Recintos seguidos"
+              }
+            },
+            {
+              "value": "nearby",
+              "label": {
+                "en": "Around the house",
+                "fr": "Autour de la maison",
+                "de": "Rund ums Haus",
+                "es": "Alrededor de la casa"
+              }
+            }
+          ]
+        },
+        {
+          "key": "segments",
+          "type": "multi_select",
+          "label": {
+            "en": "Categories",
+            "fr": "Catégories",
+            "de": "Kategorien",
+            "es": "Categorías"
+          },
+          "description": {
+            "en": "Empty: all.",
+            "fr": "Vide : toutes.",
+            "de": "Leer: alle.",
+            "es": "Vacío: todas."
+          },
+          "options": [
+            {
+              "value": "music",
+              "label": {
+                "en": "Music",
+                "fr": "Musique",
+                "de": "Musik",
+                "es": "Música"
+              }
+            },
+            {
+              "value": "sports",
+              "label": {
+                "en": "Sport",
+                "fr": "Sport",
+                "de": "Sport",
+                "es": "Deporte"
+              }
+            },
+            {
+              "value": "arts",
+              "label": {
+                "en": "Arts & theatre",
+                "fr": "Arts et spectacles",
+                "de": "Kunst & Theater",
+                "es": "Artes y teatro"
+              }
+            },
+            {
+              "value": "film",
+              "label": {
+                "en": "Film",
+                "fr": "Cinéma",
+                "de": "Film",
+                "es": "Cine"
+              }
+            },
+            {
+              "value": "misc",
+              "label": {
+                "en": "Other",
+                "fr": "Divers",
+                "de": "Sonstiges",
+                "es": "Otros"
+              }
+            }
+          ]
+        },
+        {
+          "key": "count",
+          "type": "select",
+          "label": {
+            "en": "Events listed",
+            "fr": "Sorties listées",
+            "de": "Angezeigte Veranstaltungen",
+            "es": "Eventos mostrados"
+          },
+          "options": [
+            {
+              "value": "3",
+              "label": {
+                "en": "3",
+                "fr": "3",
+                "de": "3",
+                "es": "3"
+              }
+            },
+            {
+              "value": "5",
+              "label": {
+                "en": "5",
+                "fr": "5",
+                "de": "5",
+                "es": "5"
+              }
+            },
+            {
+              "value": "8",
+              "label": {
+                "en": "8",
+                "fr": "8",
+                "de": "8",
+                "es": "8"
+              }
+            }
+          ],
+          "default": "5"
+        }
+      ]
+    },
+    {
+      "key": "next_event",
+      "icon": "star",
+      "label": {
+        "en": "Next event",
+        "fr": "Prochaine sortie",
+        "de": "Nächster Termin",
+        "es": "Próximo evento"
+      },
+      "description": {
+        "en": "Countdown to the next event, with its day, time, venue and picture.",
+        "fr": "Compte à rebours avant la prochaine sortie, avec jour, heure, lieu et image.",
+        "de": "Countdown bis zum nächsten Termin, mit Tag, Uhrzeit, Ort und Bild.",
+        "es": "Cuenta atrás hasta el próximo evento, con día, hora, lugar e imagen."
+      },
+      "settings": [
+        {
+          "key": "sources",
+          "type": "multi_select",
+          "label": {
+            "en": "Source",
+            "fr": "Source",
+            "de": "Quelle",
+            "es": "Fuente"
+          },
+          "description": {
+            "en": "Empty: all.",
+            "fr": "Vide : toutes.",
+            "de": "Leer: alle.",
+            "es": "Vacío: todas."
+          },
+          "options": [
+            {
+              "value": "artist",
+              "label": {
+                "en": "Followed artists and teams",
+                "fr": "Artistes et équipes suivis",
+                "de": "Verfolgte Künstler und Teams",
+                "es": "Artistas y equipos seguidos"
+              }
+            },
+            {
+              "value": "venue",
+              "label": {
+                "en": "Followed venues",
+                "fr": "Salles suivies",
+                "de": "Verfolgte Veranstaltungsorte",
+                "es": "Recintos seguidos"
+              }
+            },
+            {
+              "value": "nearby",
+              "label": {
+                "en": "Around the house",
+                "fr": "Autour de la maison",
+                "de": "Rund ums Haus",
+                "es": "Alrededor de la casa"
+              }
+            }
+          ]
+        },
+        {
+          "key": "segments",
+          "type": "multi_select",
+          "label": {
+            "en": "Categories",
+            "fr": "Catégories",
+            "de": "Kategorien",
+            "es": "Categorías"
+          },
+          "description": {
+            "en": "Empty: all.",
+            "fr": "Vide : toutes.",
+            "de": "Leer: alle.",
+            "es": "Vacío: todas."
+          },
+          "options": [
+            {
+              "value": "music",
+              "label": {
+                "en": "Music",
+                "fr": "Musique",
+                "de": "Musik",
+                "es": "Música"
+              }
+            },
+            {
+              "value": "sports",
+              "label": {
+                "en": "Sport",
+                "fr": "Sport",
+                "de": "Sport",
+                "es": "Deporte"
+              }
+            },
+            {
+              "value": "arts",
+              "label": {
+                "en": "Arts & theatre",
+                "fr": "Arts et spectacles",
+                "de": "Kunst & Theater",
+                "es": "Artes y teatro"
+              }
+            },
+            {
+              "value": "film",
+              "label": {
+                "en": "Film",
+                "fr": "Cinéma",
+                "de": "Film",
+                "es": "Cine"
+              }
+            },
+            {
+              "value": "misc",
+              "label": {
+                "en": "Other",
+                "fr": "Divers",
+                "de": "Sonstiges",
+                "es": "Otros"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "onsale",
+      "icon": "tag",
+      "label": {
+        "en": "Ticket sales to open",
+        "fr": "Mises en vente à venir",
+        "de": "Kommende Vorverkäufe",
+        "es": "Próximas ventas"
+      },
+      "description": {
+        "en": "The next public ticket sales to open, to be ready on time.",
+        "fr": "Les prochaines ouvertures de billetterie, pour être prêt à l’heure.",
+        "de": "Die nächsten Vorverkaufsstarts, um rechtzeitig bereit zu sein.",
+        "es": "Las próximas aperturas de venta, para estar listo a tiempo."
+      },
+      "settings": [
+        {
+          "key": "sources",
+          "type": "multi_select",
+          "label": {
+            "en": "Source",
+            "fr": "Source",
+            "de": "Quelle",
+            "es": "Fuente"
+          },
+          "description": {
+            "en": "Empty: all.",
+            "fr": "Vide : toutes.",
+            "de": "Leer: alle.",
+            "es": "Vacío: todas."
+          },
+          "options": [
+            {
+              "value": "artist",
+              "label": {
+                "en": "Followed artists and teams",
+                "fr": "Artistes et équipes suivis",
+                "de": "Verfolgte Künstler und Teams",
+                "es": "Artistas y equipos seguidos"
+              }
+            },
+            {
+              "value": "venue",
+              "label": {
+                "en": "Followed venues",
+                "fr": "Salles suivies",
+                "de": "Verfolgte Veranstaltungsorte",
+                "es": "Recintos seguidos"
+              }
+            },
+            {
+              "value": "nearby",
+              "label": {
+                "en": "Around the house",
+                "fr": "Autour de la maison",
+                "de": "Rund ums Haus",
+                "es": "Alrededor de la casa"
+              }
+            }
+          ]
+        },
+        {
+          "key": "segments",
+          "type": "multi_select",
+          "label": {
+            "en": "Categories",
+            "fr": "Catégories",
+            "de": "Kategorien",
+            "es": "Categorías"
+          },
+          "description": {
+            "en": "Empty: all.",
+            "fr": "Vide : toutes.",
+            "de": "Leer: alle.",
+            "es": "Vacío: todas."
+          },
+          "options": [
+            {
+              "value": "music",
+              "label": {
+                "en": "Music",
+                "fr": "Musique",
+                "de": "Musik",
+                "es": "Música"
+              }
+            },
+            {
+              "value": "sports",
+              "label": {
+                "en": "Sport",
+                "fr": "Sport",
+                "de": "Sport",
+                "es": "Deporte"
+              }
+            },
+            {
+              "value": "arts",
+              "label": {
+                "en": "Arts & theatre",
+                "fr": "Arts et spectacles",
+                "de": "Kunst & Theater",
+                "es": "Artes y teatro"
+              }
+            },
+            {
+              "value": "film",
+              "label": {
+                "en": "Film",
+                "fr": "Cinéma",
+                "de": "Film",
+                "es": "Cine"
+              }
+            },
+            {
+              "value": "misc",
+              "label": {
+                "en": "Other",
+                "fr": "Divers",
+                "de": "Sonstiges",
+                "es": "Otros"
+              }
+            }
+          ]
+        },
+        {
+          "key": "count",
+          "type": "select",
+          "label": {
+            "en": "Events listed",
+            "fr": "Sorties listées",
+            "de": "Angezeigte Veranstaltungen",
+            "es": "Eventos mostrados"
+          },
+          "options": [
+            {
+              "value": "3",
+              "label": {
+                "en": "3",
+                "fr": "3",
+                "de": "3",
+                "es": "3"
+              }
+            },
+            {
+              "value": "5",
+              "label": {
+                "en": "5",
+                "fr": "5",
+                "de": "5",
+                "es": "5"
+              }
+            },
+            {
+              "value": "8",
+              "label": {
+                "en": "8",
+                "fr": "8",
+                "de": "8",
+                "es": "8"
+              }
+            }
+          ],
+          "default": "5"
+        }
+      ]
+    }
+  ],
+  "scene_triggers": [
+    {
+      "key": "event_announced",
+      "label": {
+        "en": "Ticketmaster: new date",
+        "fr": "Ticketmaster : nouvelle date",
+        "de": "Ticketmaster: neuer Termin",
+        "es": "Ticketmaster: nueva fecha"
+      },
+      "description": {
+        "en": "A new event appeared: a followed artist or team, a followed venue, or around the house.",
+        "fr": "Une nouvelle sortie est apparue : artiste ou équipe suivi, salle suivie, ou autour de la maison.",
+        "de": "Eine neue Veranstaltung ist erschienen: verfolgter Künstler oder Team, verfolgter Ort oder rund ums Haus.",
+        "es": "Ha aparecido un nuevo evento: artista o equipo seguido, recinto seguido o alrededor de la casa."
+      },
+      "fields": [
+        {
+          "key": "source",
+          "type": "multi_select",
+          "label": {
+            "en": "Source",
+            "fr": "Source",
+            "de": "Quelle",
+            "es": "Fuente"
+          },
+          "description": {
+            "en": "Empty: all.",
+            "fr": "Vide : toutes.",
+            "de": "Leer: alle.",
+            "es": "Vacío: todas."
+          },
+          "options": [
+            {
+              "value": "artist",
+              "label": {
+                "en": "Followed artists and teams",
+                "fr": "Artistes et équipes suivis",
+                "de": "Verfolgte Künstler und Teams",
+                "es": "Artistas y equipos seguidos"
+              }
+            },
+            {
+              "value": "venue",
+              "label": {
+                "en": "Followed venues",
+                "fr": "Salles suivies",
+                "de": "Verfolgte Veranstaltungsorte",
+                "es": "Recintos seguidos"
+              }
+            },
+            {
+              "value": "nearby",
+              "label": {
+                "en": "Around the house",
+                "fr": "Autour de la maison",
+                "de": "Rund ums Haus",
+                "es": "Alrededor de la casa"
+              }
+            }
+          ]
+        },
+        {
+          "key": "segment",
+          "type": "multi_select",
+          "label": {
+            "en": "Categories",
+            "fr": "Catégories",
+            "de": "Kategorien",
+            "es": "Categorías"
+          },
+          "description": {
+            "en": "Empty: all.",
+            "fr": "Vide : toutes.",
+            "de": "Leer: alle.",
+            "es": "Vacío: todas."
+          },
+          "options": [
+            {
+              "value": "music",
+              "label": {
+                "en": "Music",
+                "fr": "Musique",
+                "de": "Musik",
+                "es": "Música"
+              }
+            },
+            {
+              "value": "sports",
+              "label": {
+                "en": "Sport",
+                "fr": "Sport",
+                "de": "Sport",
+                "es": "Deporte"
+              }
+            },
+            {
+              "value": "arts",
+              "label": {
+                "en": "Arts & theatre",
+                "fr": "Arts et spectacles",
+                "de": "Kunst & Theater",
+                "es": "Artes y teatro"
+              }
+            },
+            {
+              "value": "film",
+              "label": {
+                "en": "Film",
+                "fr": "Cinéma",
+                "de": "Film",
+                "es": "Cine"
+              }
+            },
+            {
+              "value": "misc",
+              "label": {
+                "en": "Other",
+                "fr": "Divers",
+                "de": "Sonstiges",
+                "es": "Otros"
+              }
+            }
+          ]
+        },
+        {
+          "key": "attraction",
+          "type": "string",
+          "label": {
+            "en": "Artist or team",
+            "fr": "Artiste ou équipe",
+            "de": "Künstler oder Team",
+            "es": "Artista o equipo"
+          },
+          "description": {
+            "en": "Exactly as Ticketmaster writes it (case-sensitive). Empty: any.",
+            "fr": "Exactement comme Ticketmaster l’écrit (majuscules comprises). Vide : tous.",
+            "de": "Genau wie Ticketmaster ihn schreibt (Groß-/Kleinschreibung). Leer: alle.",
+            "es": "Exactamente como lo escribe Ticketmaster (con mayúsculas). Vacío: todos."
+          },
+          "placeholder": {
+            "en": "Muse",
+            "fr": "Muse",
+            "de": "Muse",
+            "es": "Muse"
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "name",
+          "type": "string",
+          "label": {
+            "en": "Event",
+            "fr": "Événement",
+            "de": "Veranstaltung",
+            "es": "Evento"
+          }
+        },
+        {
+          "key": "date",
+          "type": "string",
+          "label": {
+            "en": "Date",
+            "fr": "Date",
+            "de": "Datum",
+            "es": "Fecha"
+          },
+          "description": {
+            "en": "2026-06-13",
+            "fr": "2026-06-13",
+            "de": "2026-06-13",
+            "es": "2026-06-13"
+          }
+        },
+        {
+          "key": "time",
+          "type": "string",
+          "label": {
+            "en": "Time",
+            "fr": "Heure",
+            "de": "Uhrzeit",
+            "es": "Hora"
+          },
+          "description": {
+            "en": "20:30, local time of the venue",
+            "fr": "20:30, heure locale du lieu",
+            "de": "20:30, Ortszeit",
+            "es": "20:30, hora local"
+          }
+        },
+        {
+          "key": "date_text",
+          "type": "string",
+          "label": {
+            "en": "Date (text)",
+            "fr": "Date (texte)",
+            "de": "Datum (Text)",
+            "es": "Fecha (texto)"
+          }
+        },
+        {
+          "key": "days",
+          "type": "number",
+          "label": {
+            "en": "Days until the event",
+            "fr": "Jours avant l’événement",
+            "de": "Tage bis zur Veranstaltung",
+            "es": "Días hasta el evento"
+          }
+        },
+        {
+          "key": "place",
+          "type": "string",
+          "label": {
+            "en": "Venue and city",
+            "fr": "Lieu et ville",
+            "de": "Ort und Stadt",
+            "es": "Recinto y ciudad"
+          }
+        },
+        {
+          "key": "city",
+          "type": "string",
+          "label": {
+            "en": "City",
+            "fr": "Ville",
+            "de": "Stadt",
+            "es": "Ciudad"
+          }
+        },
+        {
+          "key": "attraction",
+          "type": "string",
+          "label": {
+            "en": "Artist or team",
+            "fr": "Artiste ou équipe",
+            "de": "Künstler oder Team",
+            "es": "Artista o equipo"
+          }
+        },
+        {
+          "key": "segment",
+          "type": "string",
+          "label": {
+            "en": "Category (key)",
+            "fr": "Catégorie (clé)",
+            "de": "Kategorie (Schlüssel)",
+            "es": "Categoría (clave)"
+          }
+        },
+        {
+          "key": "source",
+          "type": "string",
+          "label": {
+            "en": "Source (key)",
+            "fr": "Source (clé)",
+            "de": "Quelle (Schlüssel)",
+            "es": "Fuente (clave)"
+          }
+        },
+        {
+          "key": "status",
+          "type": "string",
+          "label": {
+            "en": "Status (key)",
+            "fr": "Statut (clé)",
+            "de": "Status (Schlüssel)",
+            "es": "Estado (clave)"
+          }
+        },
+        {
+          "key": "url",
+          "type": "string",
+          "label": {
+            "en": "Ticketmaster page",
+            "fr": "Page Ticketmaster",
+            "de": "Ticketmaster-Seite",
+            "es": "Página de Ticketmaster"
+          }
+        },
+        {
+          "key": "image_url",
+          "type": "string",
+          "label": {
+            "en": "Picture address",
+            "fr": "Adresse de l’image",
+            "de": "Bildadresse",
+            "es": "Dirección de la imagen"
+          }
+        },
+        {
+          "key": "onsale",
+          "type": "string",
+          "label": {
+            "en": "Public sale (ISO, UTC)",
+            "fr": "Mise en vente (ISO, UTC)",
+            "de": "Vorverkauf (ISO, UTC)",
+            "es": "Venta general (ISO, UTC)"
+          }
+        },
+        {
+          "key": "onsale_text",
+          "type": "string",
+          "label": {
+            "en": "Public sale (text)",
+            "fr": "Mise en vente (texte)",
+            "de": "Vorverkauf (Text)",
+            "es": "Venta general (texto)"
+          }
+        },
+        {
+          "key": "text",
+          "type": "string",
+          "label": {
+            "en": "Ready sentence",
+            "fr": "Phrase toute faite",
+            "de": "Fertiger Satz",
+            "es": "Frase hecha"
+          },
+          "description": {
+            "en": "In the language of the configuration, to send as a message.",
+            "fr": "Dans la langue de la configuration, à envoyer en message.",
+            "de": "In der Sprache der Konfiguration, zum Versenden als Nachricht.",
+            "es": "En el idioma de la configuración, para enviar como mensaje."
+          }
+        },
+        {
+          "key": "event_id",
+          "type": "string",
+          "label": {
+            "en": "Ticketmaster identifier",
+            "fr": "Identifiant Ticketmaster",
+            "de": "Ticketmaster-Kennung",
+            "es": "Identificador de Ticketmaster"
+          }
+        }
+      ]
+    },
+    {
+      "key": "event_reminder",
+      "label": {
+        "en": "Ticketmaster: reminder",
+        "fr": "Ticketmaster : rappel",
+        "de": "Ticketmaster: Erinnerung",
+        "es": "Ticketmaster: recordatorio"
+      },
+      "description": {
+        "en": "An event takes place today, tomorrow or in a week, at the hour of the configuration.",
+        "fr": "Une sortie a lieu aujourd’hui, demain ou dans une semaine, à l’heure de la configuration.",
+        "de": "Eine Veranstaltung findet heute, morgen oder in einer Woche statt, zur Stunde der Konfiguration.",
+        "es": "Un evento tiene lugar hoy, mañana o dentro de una semana, a la hora de la configuración."
+      },
+      "fields": [
+        {
+          "key": "lead",
+          "type": "select",
+          "required": true,
+          "default": "0",
+          "label": {
+            "en": "When",
+            "fr": "Quand",
+            "de": "Wann",
+            "es": "Cuándo"
+          },
+          "options": [
+            {
+              "value": "0",
+              "label": {
+                "en": "The day of the event",
+                "fr": "Le jour même",
+                "de": "Am Tag selbst",
+                "es": "El mismo día"
+              }
+            },
+            {
+              "value": "1",
+              "label": {
+                "en": "The day before",
+                "fr": "La veille",
+                "de": "Am Vortag",
+                "es": "La víspera"
+              }
+            },
+            {
+              "value": "7",
+              "label": {
+                "en": "A week before",
+                "fr": "Une semaine avant",
+                "de": "Eine Woche vorher",
+                "es": "Una semana antes"
+              }
+            }
+          ]
+        },
+        {
+          "key": "source",
+          "type": "multi_select",
+          "label": {
+            "en": "Source",
+            "fr": "Source",
+            "de": "Quelle",
+            "es": "Fuente"
+          },
+          "description": {
+            "en": "Empty: all.",
+            "fr": "Vide : toutes.",
+            "de": "Leer: alle.",
+            "es": "Vacío: todas."
+          },
+          "options": [
+            {
+              "value": "artist",
+              "label": {
+                "en": "Followed artists and teams",
+                "fr": "Artistes et équipes suivis",
+                "de": "Verfolgte Künstler und Teams",
+                "es": "Artistas y equipos seguidos"
+              }
+            },
+            {
+              "value": "venue",
+              "label": {
+                "en": "Followed venues",
+                "fr": "Salles suivies",
+                "de": "Verfolgte Veranstaltungsorte",
+                "es": "Recintos seguidos"
+              }
+            },
+            {
+              "value": "nearby",
+              "label": {
+                "en": "Around the house",
+                "fr": "Autour de la maison",
+                "de": "Rund ums Haus",
+                "es": "Alrededor de la casa"
+              }
+            }
+          ]
+        },
+        {
+          "key": "segment",
+          "type": "multi_select",
+          "label": {
+            "en": "Categories",
+            "fr": "Catégories",
+            "de": "Kategorien",
+            "es": "Categorías"
+          },
+          "description": {
+            "en": "Empty: all.",
+            "fr": "Vide : toutes.",
+            "de": "Leer: alle.",
+            "es": "Vacío: todas."
+          },
+          "options": [
+            {
+              "value": "music",
+              "label": {
+                "en": "Music",
+                "fr": "Musique",
+                "de": "Musik",
+                "es": "Música"
+              }
+            },
+            {
+              "value": "sports",
+              "label": {
+                "en": "Sport",
+                "fr": "Sport",
+                "de": "Sport",
+                "es": "Deporte"
+              }
+            },
+            {
+              "value": "arts",
+              "label": {
+                "en": "Arts & theatre",
+                "fr": "Arts et spectacles",
+                "de": "Kunst & Theater",
+                "es": "Artes y teatro"
+              }
+            },
+            {
+              "value": "film",
+              "label": {
+                "en": "Film",
+                "fr": "Cinéma",
+                "de": "Film",
+                "es": "Cine"
+              }
+            },
+            {
+              "value": "misc",
+              "label": {
+                "en": "Other",
+                "fr": "Divers",
+                "de": "Sonstiges",
+                "es": "Otros"
+              }
+            }
+          ]
+        },
+        {
+          "key": "attraction",
+          "type": "string",
+          "label": {
+            "en": "Artist or team",
+            "fr": "Artiste ou équipe",
+            "de": "Künstler oder Team",
+            "es": "Artista o equipo"
+          },
+          "description": {
+            "en": "Exactly as Ticketmaster writes it (case-sensitive). Empty: any.",
+            "fr": "Exactement comme Ticketmaster l’écrit (majuscules comprises). Vide : tous.",
+            "de": "Genau wie Ticketmaster ihn schreibt (Groß-/Kleinschreibung). Leer: alle.",
+            "es": "Exactamente como lo escribe Ticketmaster (con mayúsculas). Vacío: todos."
+          },
+          "placeholder": {
+            "en": "Muse",
+            "fr": "Muse",
+            "de": "Muse",
+            "es": "Muse"
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "name",
+          "type": "string",
+          "label": {
+            "en": "Event",
+            "fr": "Événement",
+            "de": "Veranstaltung",
+            "es": "Evento"
+          }
+        },
+        {
+          "key": "date",
+          "type": "string",
+          "label": {
+            "en": "Date",
+            "fr": "Date",
+            "de": "Datum",
+            "es": "Fecha"
+          },
+          "description": {
+            "en": "2026-06-13",
+            "fr": "2026-06-13",
+            "de": "2026-06-13",
+            "es": "2026-06-13"
+          }
+        },
+        {
+          "key": "time",
+          "type": "string",
+          "label": {
+            "en": "Time",
+            "fr": "Heure",
+            "de": "Uhrzeit",
+            "es": "Hora"
+          },
+          "description": {
+            "en": "20:30, local time of the venue",
+            "fr": "20:30, heure locale du lieu",
+            "de": "20:30, Ortszeit",
+            "es": "20:30, hora local"
+          }
+        },
+        {
+          "key": "date_text",
+          "type": "string",
+          "label": {
+            "en": "Date (text)",
+            "fr": "Date (texte)",
+            "de": "Datum (Text)",
+            "es": "Fecha (texto)"
+          }
+        },
+        {
+          "key": "days",
+          "type": "number",
+          "label": {
+            "en": "Days until the event",
+            "fr": "Jours avant l’événement",
+            "de": "Tage bis zur Veranstaltung",
+            "es": "Días hasta el evento"
+          }
+        },
+        {
+          "key": "place",
+          "type": "string",
+          "label": {
+            "en": "Venue and city",
+            "fr": "Lieu et ville",
+            "de": "Ort und Stadt",
+            "es": "Recinto y ciudad"
+          }
+        },
+        {
+          "key": "city",
+          "type": "string",
+          "label": {
+            "en": "City",
+            "fr": "Ville",
+            "de": "Stadt",
+            "es": "Ciudad"
+          }
+        },
+        {
+          "key": "attraction",
+          "type": "string",
+          "label": {
+            "en": "Artist or team",
+            "fr": "Artiste ou équipe",
+            "de": "Künstler oder Team",
+            "es": "Artista o equipo"
+          }
+        },
+        {
+          "key": "segment",
+          "type": "string",
+          "label": {
+            "en": "Category (key)",
+            "fr": "Catégorie (clé)",
+            "de": "Kategorie (Schlüssel)",
+            "es": "Categoría (clave)"
+          }
+        },
+        {
+          "key": "source",
+          "type": "string",
+          "label": {
+            "en": "Source (key)",
+            "fr": "Source (clé)",
+            "de": "Quelle (Schlüssel)",
+            "es": "Fuente (clave)"
+          }
+        },
+        {
+          "key": "status",
+          "type": "string",
+          "label": {
+            "en": "Status (key)",
+            "fr": "Statut (clé)",
+            "de": "Status (Schlüssel)",
+            "es": "Estado (clave)"
+          }
+        },
+        {
+          "key": "url",
+          "type": "string",
+          "label": {
+            "en": "Ticketmaster page",
+            "fr": "Page Ticketmaster",
+            "de": "Ticketmaster-Seite",
+            "es": "Página de Ticketmaster"
+          }
+        },
+        {
+          "key": "image_url",
+          "type": "string",
+          "label": {
+            "en": "Picture address",
+            "fr": "Adresse de l’image",
+            "de": "Bildadresse",
+            "es": "Dirección de la imagen"
+          }
+        },
+        {
+          "key": "onsale",
+          "type": "string",
+          "label": {
+            "en": "Public sale (ISO, UTC)",
+            "fr": "Mise en vente (ISO, UTC)",
+            "de": "Vorverkauf (ISO, UTC)",
+            "es": "Venta general (ISO, UTC)"
+          }
+        },
+        {
+          "key": "onsale_text",
+          "type": "string",
+          "label": {
+            "en": "Public sale (text)",
+            "fr": "Mise en vente (texte)",
+            "de": "Vorverkauf (Text)",
+            "es": "Venta general (texto)"
+          }
+        },
+        {
+          "key": "text",
+          "type": "string",
+          "label": {
+            "en": "Ready sentence",
+            "fr": "Phrase toute faite",
+            "de": "Fertiger Satz",
+            "es": "Frase hecha"
+          },
+          "description": {
+            "en": "In the language of the configuration, to send as a message.",
+            "fr": "Dans la langue de la configuration, à envoyer en message.",
+            "de": "In der Sprache der Konfiguration, zum Versenden als Nachricht.",
+            "es": "En el idioma de la configuración, para enviar como mensaje."
+          }
+        },
+        {
+          "key": "event_id",
+          "type": "string",
+          "label": {
+            "en": "Ticketmaster identifier",
+            "fr": "Identifiant Ticketmaster",
+            "de": "Ticketmaster-Kennung",
+            "es": "Identificador de Ticketmaster"
+          }
+        },
+        {
+          "key": "lead",
+          "type": "string",
+          "label": {
+            "en": "When (key)",
+            "fr": "Quand (clé)",
+            "de": "Wann (Schlüssel)",
+            "es": "Cuándo (clave)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "sale_opening",
+      "label": {
+        "en": "Ticketmaster: ticket sale opens",
+        "fr": "Ticketmaster : mise en vente",
+        "de": "Ticketmaster: Vorverkaufsstart",
+        "es": "Ticketmaster: apertura de venta"
+      },
+      "description": {
+        "en": "The public ticket sale of an event opens now, in an hour or tomorrow.",
+        "fr": "La billetterie grand public d’une sortie ouvre maintenant, dans une heure ou demain.",
+        "de": "Der allgemeine Vorverkauf einer Veranstaltung startet jetzt, in einer Stunde oder morgen.",
+        "es": "La venta general de un evento abre ahora, dentro de una hora o mañana."
+      },
+      "fields": [
+        {
+          "key": "lead",
+          "type": "select",
+          "required": true,
+          "default": "0",
+          "label": {
+            "en": "When",
+            "fr": "Quand",
+            "de": "Wann",
+            "es": "Cuándo"
+          },
+          "options": [
+            {
+              "value": "0",
+              "label": {
+                "en": "At the opening",
+                "fr": "À l’ouverture",
+                "de": "Beim Start",
+                "es": "En la apertura"
+              }
+            },
+            {
+              "value": "60",
+              "label": {
+                "en": "An hour before",
+                "fr": "Une heure avant",
+                "de": "Eine Stunde vorher",
+                "es": "Una hora antes"
+              }
+            },
+            {
+              "value": "1440",
+              "label": {
+                "en": "The day before",
+                "fr": "La veille",
+                "de": "Am Vortag",
+                "es": "La víspera"
+              }
+            }
+          ]
+        },
+        {
+          "key": "source",
+          "type": "multi_select",
+          "label": {
+            "en": "Source",
+            "fr": "Source",
+            "de": "Quelle",
+            "es": "Fuente"
+          },
+          "description": {
+            "en": "Empty: all.",
+            "fr": "Vide : toutes.",
+            "de": "Leer: alle.",
+            "es": "Vacío: todas."
+          },
+          "options": [
+            {
+              "value": "artist",
+              "label": {
+                "en": "Followed artists and teams",
+                "fr": "Artistes et équipes suivis",
+                "de": "Verfolgte Künstler und Teams",
+                "es": "Artistas y equipos seguidos"
+              }
+            },
+            {
+              "value": "venue",
+              "label": {
+                "en": "Followed venues",
+                "fr": "Salles suivies",
+                "de": "Verfolgte Veranstaltungsorte",
+                "es": "Recintos seguidos"
+              }
+            },
+            {
+              "value": "nearby",
+              "label": {
+                "en": "Around the house",
+                "fr": "Autour de la maison",
+                "de": "Rund ums Haus",
+                "es": "Alrededor de la casa"
+              }
+            }
+          ]
+        },
+        {
+          "key": "segment",
+          "type": "multi_select",
+          "label": {
+            "en": "Categories",
+            "fr": "Catégories",
+            "de": "Kategorien",
+            "es": "Categorías"
+          },
+          "description": {
+            "en": "Empty: all.",
+            "fr": "Vide : toutes.",
+            "de": "Leer: alle.",
+            "es": "Vacío: todas."
+          },
+          "options": [
+            {
+              "value": "music",
+              "label": {
+                "en": "Music",
+                "fr": "Musique",
+                "de": "Musik",
+                "es": "Música"
+              }
+            },
+            {
+              "value": "sports",
+              "label": {
+                "en": "Sport",
+                "fr": "Sport",
+                "de": "Sport",
+                "es": "Deporte"
+              }
+            },
+            {
+              "value": "arts",
+              "label": {
+                "en": "Arts & theatre",
+                "fr": "Arts et spectacles",
+                "de": "Kunst & Theater",
+                "es": "Artes y teatro"
+              }
+            },
+            {
+              "value": "film",
+              "label": {
+                "en": "Film",
+                "fr": "Cinéma",
+                "de": "Film",
+                "es": "Cine"
+              }
+            },
+            {
+              "value": "misc",
+              "label": {
+                "en": "Other",
+                "fr": "Divers",
+                "de": "Sonstiges",
+                "es": "Otros"
+              }
+            }
+          ]
+        },
+        {
+          "key": "attraction",
+          "type": "string",
+          "label": {
+            "en": "Artist or team",
+            "fr": "Artiste ou équipe",
+            "de": "Künstler oder Team",
+            "es": "Artista o equipo"
+          },
+          "description": {
+            "en": "Exactly as Ticketmaster writes it (case-sensitive). Empty: any.",
+            "fr": "Exactement comme Ticketmaster l’écrit (majuscules comprises). Vide : tous.",
+            "de": "Genau wie Ticketmaster ihn schreibt (Groß-/Kleinschreibung). Leer: alle.",
+            "es": "Exactamente como lo escribe Ticketmaster (con mayúsculas). Vacío: todos."
+          },
+          "placeholder": {
+            "en": "Muse",
+            "fr": "Muse",
+            "de": "Muse",
+            "es": "Muse"
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "name",
+          "type": "string",
+          "label": {
+            "en": "Event",
+            "fr": "Événement",
+            "de": "Veranstaltung",
+            "es": "Evento"
+          }
+        },
+        {
+          "key": "date",
+          "type": "string",
+          "label": {
+            "en": "Date",
+            "fr": "Date",
+            "de": "Datum",
+            "es": "Fecha"
+          },
+          "description": {
+            "en": "2026-06-13",
+            "fr": "2026-06-13",
+            "de": "2026-06-13",
+            "es": "2026-06-13"
+          }
+        },
+        {
+          "key": "time",
+          "type": "string",
+          "label": {
+            "en": "Time",
+            "fr": "Heure",
+            "de": "Uhrzeit",
+            "es": "Hora"
+          },
+          "description": {
+            "en": "20:30, local time of the venue",
+            "fr": "20:30, heure locale du lieu",
+            "de": "20:30, Ortszeit",
+            "es": "20:30, hora local"
+          }
+        },
+        {
+          "key": "date_text",
+          "type": "string",
+          "label": {
+            "en": "Date (text)",
+            "fr": "Date (texte)",
+            "de": "Datum (Text)",
+            "es": "Fecha (texto)"
+          }
+        },
+        {
+          "key": "days",
+          "type": "number",
+          "label": {
+            "en": "Days until the event",
+            "fr": "Jours avant l’événement",
+            "de": "Tage bis zur Veranstaltung",
+            "es": "Días hasta el evento"
+          }
+        },
+        {
+          "key": "place",
+          "type": "string",
+          "label": {
+            "en": "Venue and city",
+            "fr": "Lieu et ville",
+            "de": "Ort und Stadt",
+            "es": "Recinto y ciudad"
+          }
+        },
+        {
+          "key": "city",
+          "type": "string",
+          "label": {
+            "en": "City",
+            "fr": "Ville",
+            "de": "Stadt",
+            "es": "Ciudad"
+          }
+        },
+        {
+          "key": "attraction",
+          "type": "string",
+          "label": {
+            "en": "Artist or team",
+            "fr": "Artiste ou équipe",
+            "de": "Künstler oder Team",
+            "es": "Artista o equipo"
+          }
+        },
+        {
+          "key": "segment",
+          "type": "string",
+          "label": {
+            "en": "Category (key)",
+            "fr": "Catégorie (clé)",
+            "de": "Kategorie (Schlüssel)",
+            "es": "Categoría (clave)"
+          }
+        },
+        {
+          "key": "source",
+          "type": "string",
+          "label": {
+            "en": "Source (key)",
+            "fr": "Source (clé)",
+            "de": "Quelle (Schlüssel)",
+            "es": "Fuente (clave)"
+          }
+        },
+        {
+          "key": "status",
+          "type": "string",
+          "label": {
+            "en": "Status (key)",
+            "fr": "Statut (clé)",
+            "de": "Status (Schlüssel)",
+            "es": "Estado (clave)"
+          }
+        },
+        {
+          "key": "url",
+          "type": "string",
+          "label": {
+            "en": "Ticketmaster page",
+            "fr": "Page Ticketmaster",
+            "de": "Ticketmaster-Seite",
+            "es": "Página de Ticketmaster"
+          }
+        },
+        {
+          "key": "image_url",
+          "type": "string",
+          "label": {
+            "en": "Picture address",
+            "fr": "Adresse de l’image",
+            "de": "Bildadresse",
+            "es": "Dirección de la imagen"
+          }
+        },
+        {
+          "key": "onsale",
+          "type": "string",
+          "label": {
+            "en": "Public sale (ISO, UTC)",
+            "fr": "Mise en vente (ISO, UTC)",
+            "de": "Vorverkauf (ISO, UTC)",
+            "es": "Venta general (ISO, UTC)"
+          }
+        },
+        {
+          "key": "onsale_text",
+          "type": "string",
+          "label": {
+            "en": "Public sale (text)",
+            "fr": "Mise en vente (texte)",
+            "de": "Vorverkauf (Text)",
+            "es": "Venta general (texto)"
+          }
+        },
+        {
+          "key": "text",
+          "type": "string",
+          "label": {
+            "en": "Ready sentence",
+            "fr": "Phrase toute faite",
+            "de": "Fertiger Satz",
+            "es": "Frase hecha"
+          },
+          "description": {
+            "en": "In the language of the configuration, to send as a message.",
+            "fr": "Dans la langue de la configuration, à envoyer en message.",
+            "de": "In der Sprache der Konfiguration, zum Versenden als Nachricht.",
+            "es": "En el idioma de la configuración, para enviar como mensaje."
+          }
+        },
+        {
+          "key": "event_id",
+          "type": "string",
+          "label": {
+            "en": "Ticketmaster identifier",
+            "fr": "Identifiant Ticketmaster",
+            "de": "Ticketmaster-Kennung",
+            "es": "Identificador de Ticketmaster"
+          }
+        },
+        {
+          "key": "lead",
+          "type": "string",
+          "label": {
+            "en": "When (key)",
+            "fr": "Quand (clé)",
+            "de": "Wann (Schlüssel)",
+            "es": "Cuándo (clave)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "event_status_changed",
+      "label": {
+        "en": "Ticketmaster: canceled or moved",
+        "fr": "Ticketmaster : annulé ou déplacé",
+        "de": "Ticketmaster: abgesagt oder verlegt",
+        "es": "Ticketmaster: cancelado o cambiado"
+      },
+      "description": {
+        "en": "An event was canceled, postponed, given a new date or moved to another day or time.",
+        "fr": "Une sortie a été annulée, reportée, a reçu une nouvelle date ou a changé de jour ou d’heure.",
+        "de": "Eine Veranstaltung wurde abgesagt, verschoben, neu terminiert oder auf einen anderen Tag oder eine andere Uhrzeit verlegt.",
+        "es": "Un evento se canceló, aplazó, recibió una nueva fecha o cambió de día u hora."
+      },
+      "fields": [
+        {
+          "key": "change",
+          "type": "multi_select",
+          "label": {
+            "en": "Change",
+            "fr": "Changement",
+            "de": "Änderung",
+            "es": "Cambio"
+          },
+          "description": {
+            "en": "Empty: all.",
+            "fr": "Vide : tous.",
+            "de": "Leer: alle.",
+            "es": "Vacío: todos."
+          },
+          "options": [
+            {
+              "value": "canceled",
+              "label": {
+                "en": "Canceled",
+                "fr": "Annulé",
+                "de": "Abgesagt",
+                "es": "Cancelado"
+              }
+            },
+            {
+              "value": "postponed",
+              "label": {
+                "en": "Postponed",
+                "fr": "Reporté",
+                "de": "Verschoben",
+                "es": "Aplazado"
+              }
+            },
+            {
+              "value": "rescheduled",
+              "label": {
+                "en": "New date",
+                "fr": "Nouvelle date",
+                "de": "Neuer Termin",
+                "es": "Nueva fecha"
+              }
+            },
+            {
+              "value": "date_changed",
+              "label": {
+                "en": "Other day or time",
+                "fr": "Autre jour ou heure",
+                "de": "Anderer Tag oder Uhrzeit",
+                "es": "Otro día u hora"
+              }
+            }
+          ]
+        },
+        {
+          "key": "source",
+          "type": "multi_select",
+          "label": {
+            "en": "Source",
+            "fr": "Source",
+            "de": "Quelle",
+            "es": "Fuente"
+          },
+          "description": {
+            "en": "Empty: all.",
+            "fr": "Vide : toutes.",
+            "de": "Leer: alle.",
+            "es": "Vacío: todas."
+          },
+          "options": [
+            {
+              "value": "artist",
+              "label": {
+                "en": "Followed artists and teams",
+                "fr": "Artistes et équipes suivis",
+                "de": "Verfolgte Künstler und Teams",
+                "es": "Artistas y equipos seguidos"
+              }
+            },
+            {
+              "value": "venue",
+              "label": {
+                "en": "Followed venues",
+                "fr": "Salles suivies",
+                "de": "Verfolgte Veranstaltungsorte",
+                "es": "Recintos seguidos"
+              }
+            },
+            {
+              "value": "nearby",
+              "label": {
+                "en": "Around the house",
+                "fr": "Autour de la maison",
+                "de": "Rund ums Haus",
+                "es": "Alrededor de la casa"
+              }
+            }
+          ]
+        },
+        {
+          "key": "segment",
+          "type": "multi_select",
+          "label": {
+            "en": "Categories",
+            "fr": "Catégories",
+            "de": "Kategorien",
+            "es": "Categorías"
+          },
+          "description": {
+            "en": "Empty: all.",
+            "fr": "Vide : toutes.",
+            "de": "Leer: alle.",
+            "es": "Vacío: todas."
+          },
+          "options": [
+            {
+              "value": "music",
+              "label": {
+                "en": "Music",
+                "fr": "Musique",
+                "de": "Musik",
+                "es": "Música"
+              }
+            },
+            {
+              "value": "sports",
+              "label": {
+                "en": "Sport",
+                "fr": "Sport",
+                "de": "Sport",
+                "es": "Deporte"
+              }
+            },
+            {
+              "value": "arts",
+              "label": {
+                "en": "Arts & theatre",
+                "fr": "Arts et spectacles",
+                "de": "Kunst & Theater",
+                "es": "Artes y teatro"
+              }
+            },
+            {
+              "value": "film",
+              "label": {
+                "en": "Film",
+                "fr": "Cinéma",
+                "de": "Film",
+                "es": "Cine"
+              }
+            },
+            {
+              "value": "misc",
+              "label": {
+                "en": "Other",
+                "fr": "Divers",
+                "de": "Sonstiges",
+                "es": "Otros"
+              }
+            }
+          ]
+        },
+        {
+          "key": "attraction",
+          "type": "string",
+          "label": {
+            "en": "Artist or team",
+            "fr": "Artiste ou équipe",
+            "de": "Künstler oder Team",
+            "es": "Artista o equipo"
+          },
+          "description": {
+            "en": "Exactly as Ticketmaster writes it (case-sensitive). Empty: any.",
+            "fr": "Exactement comme Ticketmaster l’écrit (majuscules comprises). Vide : tous.",
+            "de": "Genau wie Ticketmaster ihn schreibt (Groß-/Kleinschreibung). Leer: alle.",
+            "es": "Exactamente como lo escribe Ticketmaster (con mayúsculas). Vacío: todos."
+          },
+          "placeholder": {
+            "en": "Muse",
+            "fr": "Muse",
+            "de": "Muse",
+            "es": "Muse"
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "name",
+          "type": "string",
+          "label": {
+            "en": "Event",
+            "fr": "Événement",
+            "de": "Veranstaltung",
+            "es": "Evento"
+          }
+        },
+        {
+          "key": "date",
+          "type": "string",
+          "label": {
+            "en": "Date",
+            "fr": "Date",
+            "de": "Datum",
+            "es": "Fecha"
+          },
+          "description": {
+            "en": "2026-06-13",
+            "fr": "2026-06-13",
+            "de": "2026-06-13",
+            "es": "2026-06-13"
+          }
+        },
+        {
+          "key": "time",
+          "type": "string",
+          "label": {
+            "en": "Time",
+            "fr": "Heure",
+            "de": "Uhrzeit",
+            "es": "Hora"
+          },
+          "description": {
+            "en": "20:30, local time of the venue",
+            "fr": "20:30, heure locale du lieu",
+            "de": "20:30, Ortszeit",
+            "es": "20:30, hora local"
+          }
+        },
+        {
+          "key": "date_text",
+          "type": "string",
+          "label": {
+            "en": "Date (text)",
+            "fr": "Date (texte)",
+            "de": "Datum (Text)",
+            "es": "Fecha (texto)"
+          }
+        },
+        {
+          "key": "days",
+          "type": "number",
+          "label": {
+            "en": "Days until the event",
+            "fr": "Jours avant l’événement",
+            "de": "Tage bis zur Veranstaltung",
+            "es": "Días hasta el evento"
+          }
+        },
+        {
+          "key": "place",
+          "type": "string",
+          "label": {
+            "en": "Venue and city",
+            "fr": "Lieu et ville",
+            "de": "Ort und Stadt",
+            "es": "Recinto y ciudad"
+          }
+        },
+        {
+          "key": "city",
+          "type": "string",
+          "label": {
+            "en": "City",
+            "fr": "Ville",
+            "de": "Stadt",
+            "es": "Ciudad"
+          }
+        },
+        {
+          "key": "attraction",
+          "type": "string",
+          "label": {
+            "en": "Artist or team",
+            "fr": "Artiste ou équipe",
+            "de": "Künstler oder Team",
+            "es": "Artista o equipo"
+          }
+        },
+        {
+          "key": "segment",
+          "type": "string",
+          "label": {
+            "en": "Category (key)",
+            "fr": "Catégorie (clé)",
+            "de": "Kategorie (Schlüssel)",
+            "es": "Categoría (clave)"
+          }
+        },
+        {
+          "key": "source",
+          "type": "string",
+          "label": {
+            "en": "Source (key)",
+            "fr": "Source (clé)",
+            "de": "Quelle (Schlüssel)",
+            "es": "Fuente (clave)"
+          }
+        },
+        {
+          "key": "status",
+          "type": "string",
+          "label": {
+            "en": "Status (key)",
+            "fr": "Statut (clé)",
+            "de": "Status (Schlüssel)",
+            "es": "Estado (clave)"
+          }
+        },
+        {
+          "key": "url",
+          "type": "string",
+          "label": {
+            "en": "Ticketmaster page",
+            "fr": "Page Ticketmaster",
+            "de": "Ticketmaster-Seite",
+            "es": "Página de Ticketmaster"
+          }
+        },
+        {
+          "key": "image_url",
+          "type": "string",
+          "label": {
+            "en": "Picture address",
+            "fr": "Adresse de l’image",
+            "de": "Bildadresse",
+            "es": "Dirección de la imagen"
+          }
+        },
+        {
+          "key": "onsale",
+          "type": "string",
+          "label": {
+            "en": "Public sale (ISO, UTC)",
+            "fr": "Mise en vente (ISO, UTC)",
+            "de": "Vorverkauf (ISO, UTC)",
+            "es": "Venta general (ISO, UTC)"
+          }
+        },
+        {
+          "key": "onsale_text",
+          "type": "string",
+          "label": {
+            "en": "Public sale (text)",
+            "fr": "Mise en vente (texte)",
+            "de": "Vorverkauf (Text)",
+            "es": "Venta general (texto)"
+          }
+        },
+        {
+          "key": "text",
+          "type": "string",
+          "label": {
+            "en": "Ready sentence",
+            "fr": "Phrase toute faite",
+            "de": "Fertiger Satz",
+            "es": "Frase hecha"
+          },
+          "description": {
+            "en": "In the language of the configuration, to send as a message.",
+            "fr": "Dans la langue de la configuration, à envoyer en message.",
+            "de": "In der Sprache der Konfiguration, zum Versenden als Nachricht.",
+            "es": "En el idioma de la configuración, para enviar como mensaje."
+          }
+        },
+        {
+          "key": "event_id",
+          "type": "string",
+          "label": {
+            "en": "Ticketmaster identifier",
+            "fr": "Identifiant Ticketmaster",
+            "de": "Ticketmaster-Kennung",
+            "es": "Identificador de Ticketmaster"
+          }
+        },
+        {
+          "key": "change",
+          "type": "string",
+          "label": {
+            "en": "Change (key)",
+            "fr": "Changement (clé)",
+            "de": "Änderung (Schlüssel)",
+            "es": "Cambio (clave)"
+          },
+          "description": {
+            "en": "canceled, postponed, rescheduled, date_changed",
+            "fr": "canceled, postponed, rescheduled, date_changed",
+            "de": "canceled, postponed, rescheduled, date_changed",
+            "es": "canceled, postponed, rescheduled, date_changed"
+          }
+        },
+        {
+          "key": "previous_date",
+          "type": "string",
+          "label": {
+            "en": "Previous date",
+            "fr": "Date précédente",
+            "de": "Vorheriges Datum",
+            "es": "Fecha anterior"
+          }
+        }
+      ]
+    }
+  ],
+  "scene_actions": [
+    {
+      "key": "get_next_event",
+      "timeout_seconds": 10,
+      "label": {
+        "en": "Ticketmaster: next event",
+        "fr": "Ticketmaster : prochaine sortie",
+        "de": "Ticketmaster: nächster Termin",
+        "es": "Ticketmaster: próximo evento"
+      },
+      "description": {
+        "en": "The next event kept (canceled ones left out), with filters. Days: -1 when nothing is found.",
+        "fr": "La prochaine sortie gardée (hors annulées), avec des filtres. Jours : -1 quand rien n’est trouvé.",
+        "de": "Der nächste gespeicherte Termin (ohne abgesagte), mit Filtern. Tage: -1, wenn nichts gefunden wird.",
+        "es": "El próximo evento guardado (sin los cancelados), con filtros. Días: -1 si no se encuentra nada."
+      },
+      "fields": [
+        {
+          "key": "source",
+          "type": "multi_select",
+          "label": {
+            "en": "Source",
+            "fr": "Source",
+            "de": "Quelle",
+            "es": "Fuente"
+          },
+          "description": {
+            "en": "Empty: all.",
+            "fr": "Vide : toutes.",
+            "de": "Leer: alle.",
+            "es": "Vacío: todas."
+          },
+          "options": [
+            {
+              "value": "artist",
+              "label": {
+                "en": "Followed artists and teams",
+                "fr": "Artistes et équipes suivis",
+                "de": "Verfolgte Künstler und Teams",
+                "es": "Artistas y equipos seguidos"
+              }
+            },
+            {
+              "value": "venue",
+              "label": {
+                "en": "Followed venues",
+                "fr": "Salles suivies",
+                "de": "Verfolgte Veranstaltungsorte",
+                "es": "Recintos seguidos"
+              }
+            },
+            {
+              "value": "nearby",
+              "label": {
+                "en": "Around the house",
+                "fr": "Autour de la maison",
+                "de": "Rund ums Haus",
+                "es": "Alrededor de la casa"
+              }
+            }
+          ]
+        },
+        {
+          "key": "segment",
+          "type": "multi_select",
+          "label": {
+            "en": "Categories",
+            "fr": "Catégories",
+            "de": "Kategorien",
+            "es": "Categorías"
+          },
+          "description": {
+            "en": "Empty: all.",
+            "fr": "Vide : toutes.",
+            "de": "Leer: alle.",
+            "es": "Vacío: todas."
+          },
+          "options": [
+            {
+              "value": "music",
+              "label": {
+                "en": "Music",
+                "fr": "Musique",
+                "de": "Musik",
+                "es": "Música"
+              }
+            },
+            {
+              "value": "sports",
+              "label": {
+                "en": "Sport",
+                "fr": "Sport",
+                "de": "Sport",
+                "es": "Deporte"
+              }
+            },
+            {
+              "value": "arts",
+              "label": {
+                "en": "Arts & theatre",
+                "fr": "Arts et spectacles",
+                "de": "Kunst & Theater",
+                "es": "Artes y teatro"
+              }
+            },
+            {
+              "value": "film",
+              "label": {
+                "en": "Film",
+                "fr": "Cinéma",
+                "de": "Film",
+                "es": "Cine"
+              }
+            },
+            {
+              "value": "misc",
+              "label": {
+                "en": "Other",
+                "fr": "Divers",
+                "de": "Sonstiges",
+                "es": "Otros"
+              }
+            }
+          ]
+        },
+        {
+          "key": "attraction",
+          "type": "string",
+          "label": {
+            "en": "Artist or team",
+            "fr": "Artiste ou équipe",
+            "de": "Künstler oder Team",
+            "es": "Artista o equipo"
+          },
+          "description": {
+            "en": "Exactly as Ticketmaster writes it (case-sensitive). Empty: any.",
+            "fr": "Exactement comme Ticketmaster l’écrit (majuscules comprises). Vide : tous.",
+            "de": "Genau wie Ticketmaster ihn schreibt (Groß-/Kleinschreibung). Leer: alle.",
+            "es": "Exactamente como lo escribe Ticketmaster (con mayúsculas). Vacío: todos."
+          },
+          "placeholder": {
+            "en": "Muse",
+            "fr": "Muse",
+            "de": "Muse",
+            "es": "Muse"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "key": "found",
+          "type": "boolean",
+          "label": {
+            "en": "Found",
+            "fr": "Trouvée",
+            "de": "Gefunden",
+            "es": "Encontrado"
+          }
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "label": {
+            "en": "Event",
+            "fr": "Événement",
+            "de": "Veranstaltung",
+            "es": "Evento"
+          }
+        },
+        {
+          "key": "date",
+          "type": "string",
+          "label": {
+            "en": "Date",
+            "fr": "Date",
+            "de": "Datum",
+            "es": "Fecha"
+          }
+        },
+        {
+          "key": "time",
+          "type": "string",
+          "label": {
+            "en": "Time",
+            "fr": "Heure",
+            "de": "Uhrzeit",
+            "es": "Hora"
+          }
+        },
+        {
+          "key": "date_text",
+          "type": "string",
+          "label": {
+            "en": "Date (text)",
+            "fr": "Date (texte)",
+            "de": "Datum (Text)",
+            "es": "Fecha (texto)"
+          }
+        },
+        {
+          "key": "days",
+          "type": "number",
+          "label": {
+            "en": "Days until the event",
+            "fr": "Jours avant l’événement",
+            "de": "Tage bis zur Veranstaltung",
+            "es": "Días hasta el evento"
+          }
+        },
+        {
+          "key": "place",
+          "type": "string",
+          "label": {
+            "en": "Venue and city",
+            "fr": "Lieu et ville",
+            "de": "Ort und Stadt",
+            "es": "Recinto y ciudad"
+          }
+        },
+        {
+          "key": "city",
+          "type": "string",
+          "label": {
+            "en": "City",
+            "fr": "Ville",
+            "de": "Stadt",
+            "es": "Ciudad"
+          }
+        },
+        {
+          "key": "attraction",
+          "type": "string",
+          "label": {
+            "en": "Artist or team",
+            "fr": "Artiste ou équipe",
+            "de": "Künstler oder Team",
+            "es": "Artista o equipo"
+          }
+        },
+        {
+          "key": "segment",
+          "type": "string",
+          "label": {
+            "en": "Category (key)",
+            "fr": "Catégorie (clé)",
+            "de": "Kategorie (Schlüssel)",
+            "es": "Categoría (clave)"
+          }
+        },
+        {
+          "key": "source",
+          "type": "string",
+          "label": {
+            "en": "Source (key)",
+            "fr": "Source (clé)",
+            "de": "Quelle (Schlüssel)",
+            "es": "Fuente (clave)"
+          }
+        },
+        {
+          "key": "status",
+          "type": "string",
+          "label": {
+            "en": "Status (key)",
+            "fr": "Statut (clé)",
+            "de": "Status (Schlüssel)",
+            "es": "Estado (clave)"
+          }
+        },
+        {
+          "key": "url",
+          "type": "string",
+          "label": {
+            "en": "Ticketmaster page",
+            "fr": "Page Ticketmaster",
+            "de": "Ticketmaster-Seite",
+            "es": "Página de Ticketmaster"
+          }
+        },
+        {
+          "key": "image_url",
+          "type": "string",
+          "label": {
+            "en": "Picture address",
+            "fr": "Adresse de l’image",
+            "de": "Bildadresse",
+            "es": "Dirección de la imagen"
+          }
+        },
+        {
+          "key": "onsale_text",
+          "type": "string",
+          "label": {
+            "en": "Public sale (text)",
+            "fr": "Mise en vente (texte)",
+            "de": "Vorverkauf (Text)",
+            "es": "Venta general (texto)"
+          }
+        },
+        {
+          "key": "text",
+          "type": "string",
+          "label": {
+            "en": "Ready sentence",
+            "fr": "Phrase toute faite",
+            "de": "Fertiger Satz",
+            "es": "Frase hecha"
+          }
+        }
+      ]
+    }
+  ]
+}

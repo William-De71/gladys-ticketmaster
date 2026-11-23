@@ -1,0 +1,20 @@
+Gladys Ticketmaster integration
+Copyright 2026 William Deren
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+The events (names, dates, venues, attractions, classifications, sales,
+prices, pictures) come from the Ticketmaster Discovery API
+(https://developer.ticketmaster.com), read with the API key of each user
+under the Ticketmaster terms of use. They belong to Ticketmaster and to the
+event organizers; the pictures shown in the widgets are downloaded from
+Ticketmaster's image servers when a dashboard shows them, and none is part of
+this repository (the pictures of the widget illustrations are drawn by
+docs/illustrations/gen.mjs).
+
+The answers used in test/ are built by hand from the documentation of the
+Discovery API, not copied from it.
+
+Ticketmaster is a trademark of Live Nation Entertainment, Inc. This community
+integration is not affiliated with, endorsed or sponsored by Ticketmaster or
+Live Nation.
