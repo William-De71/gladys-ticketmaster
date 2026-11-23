@@ -5,7 +5,7 @@ follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions
 follow [Semantic Versioning](https://semver.org/). This file is generated at
 each release from the Conventional Commits: do not edit it by hand.
 
-## [0.1.0] - unreleased
+## [0.1.0] - 2026-11-23
 
 ### Added
 
@@ -19,3 +19,5 @@ each release from the Conventional Commits: do not edit it by hand.
 - The daily quota and a refused key are told in the status of the integration; a reading that fails keeps what was already known.
 - Cloud transport: the Discovery API and the image servers of Ticketmaster only; the position of the house goes out rounded to about 150 m.
 - English, French, German and Spanish everywhere: settings, calendars, widgets, scenes and documentation.
+
+[0.1.0]: https://github.com/William-De71/gladys-ticketmaster/releases/tag/v0.1.0
